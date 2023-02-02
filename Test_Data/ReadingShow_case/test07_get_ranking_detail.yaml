@@ -1,0 +1,8 @@
+-
+  url: 'https://www.bigfishai.com:8300/api/dubbing/competition/competition_id/get_ranking_detail/'
+  header:
+    Authorization: '测试token'
+  param:
+    page: 1
+    page_size: 5
+    ranking_config: 0

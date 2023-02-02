@@ -1,0 +1,4 @@
+-
+  url: 'https://www.bigfishai.com:8300/api/dubbing/competition/competition_id/goods_info/'
+  header:
+    Authorization: '测试token'

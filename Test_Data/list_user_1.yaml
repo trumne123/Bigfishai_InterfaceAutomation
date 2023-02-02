@@ -1,0 +1,6 @@
+param:
+    category: 2
+    page: 1
+    page_size: 20
+    participated: 0
+url: 'https://www.bigfishai.com:8300/api/dubbing/competition/list_user_1/'

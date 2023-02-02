@@ -1,0 +1,7 @@
+-
+  url: 'https://www.bigfishai.com:8300/api/dubbing/competition/competition_id/content_list/'
+  header:
+    Authorization: '测试token'
+  param:
+    is_training: 'true'
+    against: 'false'
