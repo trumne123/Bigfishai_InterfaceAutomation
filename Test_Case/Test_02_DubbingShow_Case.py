@@ -1,4 +1,4 @@
-from Config.Conftest import *
+import pytest
 
 
 @pytest.mark.usefixtures('pre_class_test')

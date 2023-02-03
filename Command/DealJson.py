@@ -47,25 +47,26 @@ def get_competition_id(json):
 def get_dubbing_info(json):
     user_dubbing_id = json['data']['user_dubbing_id']
     write_data = {'user_dubbing_id': user_dubbing_id}
-    add_data(write_data, filepath_variable_path['LinkedDataPath'])
     up_data = f'update linked_data set value = "{write_data["user_dubbing_id"]}" where title = "user_dubbing_id"'
     update_data(up_data)
-    for i in json['data']['result']:
+    for dubbing_info in json['data']['result']:
         title = ''
         eval_type = ''
-        content_type = str(i['content_type'])
-        content_id = str(i['id'])
-        audio_url = i['audio_url']
-        if i['content_type'] == 0:
-            title = i['title']
+        content_type = str(dubbing_info['content_type'])
+        content_id = str(dubbing_info['id'])
+        audio_url = dubbing_info['audio_url']
+        if dubbing_info['content_type'] == 0:
+            title = dubbing_info['title']
             eval_type = '12'
-        if i['content_type'] == 1:
-            title = i['title']
+        if dubbing_info['content_type'] == 1:
+            title = dubbing_info['title']
             eval_type = '13'
-        elif i['content_type'] == 2:
-            title = i['content']
+        elif dubbing_info['content_type'] == 2:
+            title = dubbing_info['content']
             eval_type = '14'
+        # 把每个原音id+原音下载链接存入test03作为用例，test03用例对该活动所有原音进行，之后处理作为上传评测录音
         write_data_to_04case = [{'id': content_id, 'audio_url': audio_url}]
+        # 存入每个音频的评测入参到test04用例中
         write_data_to_05case = [{'url': 'https://www.bigfishai.com:8300/api/voice/speech_evaluation_report/',
                                  'user_dubbing': user_dubbing_id,
                                  'id': content_id,
@@ -73,10 +74,12 @@ def get_dubbing_info(json):
                                  'eval_type': eval_type,
                                  'content_type': content_type
                                  }]
-        if json['data']['result'].index(i) == 0:
+        # 判断如果是第一条入参，就对用例yaml进行覆盖写入
+        if json['data']['result'].index(dubbing_info) == 0:
             cover_data(write_data_to_04case, filepath_variable_path['ReadingShowCase'] + 'test03_download_audio.yaml')
             cover_data(write_data_to_05case,
                        filepath_variable_path['ReadingShowCase'] + 'test04_speech_evaluation_report.yaml')
+        # 如果不是第一条，就对yaml进行追加写入
         else:
             add_data(write_data_to_04case, filepath_variable_path['ReadingShowCase'] + 'test03_download_audio.yaml')
             add_data(write_data_to_05case,

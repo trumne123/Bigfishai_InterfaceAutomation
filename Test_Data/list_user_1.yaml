@@ -4,3 +4,5 @@ param:
     page_size: 20
     participated: 0
 url: 'https://www.bigfishai.com:8300/api/dubbing/competition/list_user_1/'
+header:
+  Authorization: '测试token'

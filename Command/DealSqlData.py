@@ -77,8 +77,9 @@ def delete_data(sql):
 
 
 if __name__ == '__main__':
-    qu_sql = 'select dialogue_id,start_time,end_time,title from dubbing_info_data'
-    qu_data = query_data(qu_sql)
-    jj = 0
-    for i in qu_data:
-        print(type(i[1]))
+    qu_sql = 'select value from linked_data where title = "user_dubbing_id"'
+    qu_data = query_data(qu_sql)[0][0]
+    print(qu_data)
+    # jj = 0
+    # for i in qu_data:
+    #     print(type(i[1]))

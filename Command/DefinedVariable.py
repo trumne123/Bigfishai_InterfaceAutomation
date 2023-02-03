@@ -3,7 +3,7 @@ filepath_variable_path = {'LinkedDataPath': './TestData/Linked_Data.yaml',
                           'ReadingShowCase': './Test_Data/ReadingShow_case/',
                           'DubbingShowCase': './Test_Data/DubbingShow_case/',
                           'testData': './Test_Data/',
-                          'DownloadAudioPath': './Media/Audio/DownloadAudio/',
-                          'UploadAudioPath': './Media/Audio/UploadAudio/',
-                          'DownloadVideoPath': './Media/Video/DownloadVideo/'
+                          'DownloadAudioPath': './MediaFile/Audio/DownloadAudio/',
+                          'UploadAudioPath': './MediaFile/Audio/UploadAudio/',
+                          'DownloadVideoPath': './MediaFile/Video/DownloadVideo/'
                           }
