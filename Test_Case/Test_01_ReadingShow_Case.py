@@ -3,12 +3,12 @@ import time
 import pytest
 import requests
 from Command.DealJson import *
-from Command.DealSqlData import *
 from Command.DealAudioFile import *
 from Command.Support_function import *
 from requests_toolbelt import MultipartEncoder
 
 
+# @pytest.mark.skip('Test_ReadingShow跳过！')
 @pytest.mark.usefixtures('pre_class_test')
 class Test_ReadingShow:
     # 获取商品信息
@@ -53,8 +53,6 @@ class Test_ReadingShow:
             url = case_info['url']
             file_name = case_info['id']
             user_dubbing = query_data('select value from linked_data where title = "user_dubbing_id"')[0][0]
-            # user_dubbing = str(read_data(filepath_variable_path['LinkedDataPath'])['user_dubbing_id'])
-            # competition = str(read_data(filepath_variable_path['LinkedDataPath'])['competition_id_reading'])
             competition = query_data('select value from linked_data where title = "competition_id_reading"')[0][0]
             upload_file = open(f'./MediaFile/Audio/UploadAudio/{file_name}.MP3', 'rb').read()
             file_data = {

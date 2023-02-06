@@ -22,8 +22,10 @@ def cut_audio(start_time, end_time, audio_name):
 def deal_video(filename, cut_audio_info):
     video_path = './MediaFile/Video/DownloadVideo/' + filename
     video = VideoFileClip(video_path)
+    # 视频转音频
     video.audio.write_audiofile('./MediaFile/Video/DownloadVideo/' + 'change_to_mp3.mp3')
     video.close()
+    # 将音频切割为多个片段
     for i in cut_audio_info:
         # cut_audio(i['start_time'], i['end_time'], i['id'])
         cut_audio(i[1], i[2], i[0])

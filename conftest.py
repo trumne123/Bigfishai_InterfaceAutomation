@@ -41,6 +41,7 @@ def delete_json_file():
     # 删除json文件
     for delete_file in os.listdir(temp_path):
         os.remove(temp_path + delete_file)
+    print('删除缓存')
 
 
 # 登录获取token

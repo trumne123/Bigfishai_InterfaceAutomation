@@ -1,0 +1,4 @@
+-
+  header:
+    Authorization: '测试token'
+  url: 'https://www.bigfishai.com:8300/api/dubbing/competition/competition_id/'

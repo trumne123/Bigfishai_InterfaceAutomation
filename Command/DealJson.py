@@ -86,17 +86,18 @@ def get_dubbing_info(json):
                      filepath_variable_path['ReadingShowCase'] + 'test04_speech_evaluation_report.yaml')
 
 
+# 将video_url和dubbing_src存入数据库
 def get_competition_info(json):
     video_url = json['data']['video']['res']
     dubbing_src = json['data']['dubbingsrc']
     write_data = {'video_url': video_url, 'dubbing_src': dubbing_src}
-    add_data(write_data, filepath_variable_path['LinkedDataPath'])
     up_data1 = f'update linked_data set value = "{write_data["video_url"]}" where title = "video_url"'
     update_data(up_data1)
     up_data2 = f'update linked_data set value = "{write_data["dubbing_src"]}" where title = "dubbing_src"'
     update_data(up_data2)
 
 
+# 提前存入视频中每个句子的开始时间和结束时间
 def get_dubbingsrcv_info(json):
     delete_data('truncate table dubbing_info_data')
     for i in json['data']['dialogue']:
@@ -104,11 +105,5 @@ def get_dubbingsrcv_info(json):
         title = i['title']
         start_time = i['start_timestamp']
         end_time = i['end_timestamp']
-        write_data_to_yaml = [
-            {'dialogue_id': dialogue_id, 'title': title, 'start_time': start_time, 'end_time': end_time}]
-        if json['data']['dialogue'].index(i) == 0:
-            cover_data(write_data_to_yaml, filepath_variable_path['DubbingInfoPath'])
-        else:
-            add_data(write_data_to_yaml, filepath_variable_path['DubbingInfoPath'])
         in_data = f'insert into dubbing_info_data(dialogue_id, start_time, end_time, title) value({dialogue_id}, "{start_time}", "{end_time}", "{title}")'
         insert_data(in_data)
