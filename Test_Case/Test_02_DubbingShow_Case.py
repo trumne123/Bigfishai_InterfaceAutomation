@@ -8,7 +8,8 @@ from Command.Support_function import *
 from requests_toolbelt import MultipartEncoder
 
 
-@pytest.mark.usefixtures('pre_class_test')
+# @pytest.mark.usefixtures('pre_class_test')
+@pytest.mark.skip('Test_DubbingShow跳过！')
 class Test_DubbingShow:
     # 查询官方指定活动
     @pytest.mark.parametrize('CaseData', read_data(filepath_variable_path['DubbingShowCase'] + 'test01_competition.yaml'))

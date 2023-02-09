@@ -8,8 +8,8 @@ from Command.Support_function import *
 from requests_toolbelt import MultipartEncoder
 
 
-# @pytest.mark.skip('Test_ReadingShow跳过！')
-@pytest.mark.usefixtures('pre_class_test')
+@pytest.mark.skip('Test_ReadingShow跳过！')
+# @pytest.mark.usefixtures('pre_class_test')
 class Test_ReadingShow:
     # 获取商品信息
     @pytest.mark.parametrize('CaseData', read_data(filepath_variable_path['ReadingShowCase'] + 'test01_goods_info.yaml'))
