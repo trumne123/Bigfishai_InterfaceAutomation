@@ -2,4 +2,4 @@ url: 'https://www.bigfishai.com:8300/api/users/users/'
 param:
   telephone: '13619634942'
   verify_code: '209394'
-  wechar_info2_id: ''
+  'apple_info_id': 0

@@ -51,5 +51,5 @@ def get_speech_data():
 
 def deal_score(score):
     # 计算平均分=(总分/人数)取整
-    get_score = round((sum(score)) / len(score))
+    get_score = round(sum(score) / len(score))
     update_data(f'update linked_data set value = {get_score} where title = "score"')

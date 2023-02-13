@@ -1,3 +1,4 @@
+import traceback
 from Command.DealData import *
 from Command.DealSqlData import *
 from Command.DefinedVariable import *
@@ -5,11 +6,25 @@ from Command.DefinedVariable import *
 
 # 获取token
 def get_token(json):
-    if json['code'] == 200:
-        token = json['data']['key']
-        write_data = {'token': 'Token ' + token}
-        up_data = f'update linked_data set value = "{write_data["token"]}" where title = "token"'
-        update_data(up_data)
+    # 判断如果custom_login()调用，就存入多个token
+    if traceback.extract_stack()[-2][2] == 'custom_login':
+        up_data = []
+        for json_data in json:
+            if json_data['code'] == 200:
+                token = json_data['data']['key']
+                up_data.append(token)
+            else:
+                print('登录失败，没有获取到token')
+        update_data(f'update linked_data set value = "{up_data}" where title = "custom_token"')
+    # 如果不是固定调用，就存入通用token
+    else:
+        if json['code'] == 200:
+            token = json['data']['key']
+            write_data = {'token': 'Token ' + token}
+            up_data = f'update linked_data set value = "{write_data["token"]}" where title = "token"'
+            update_data(up_data)
+        else:
+            print('登录失败，没有获取到token')
 
 
 # 获取用户id
