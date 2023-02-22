@@ -6,8 +6,8 @@ from Command.DefinedVariable import *
 
 # 获取token
 def get_token(json):
-    # 判断如果custom_login()调用，就存入多个token
-    if traceback.extract_stack()[-2][2] == 'custom_login':
+    # 判断如果对应方法调用，就存入多个token
+    if traceback.extract_stack()[-2][2] == 'test01_new_login':
         up_data = []
         for json_data in json:
             if json_data['code'] == 200:

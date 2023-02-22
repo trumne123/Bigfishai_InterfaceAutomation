@@ -1,0 +1,6 @@
+-
+  url: 'https://www.bigfishai.com:8300/api/schools/klass/000004/bind_klass/'
+  header:
+    Authorization: '测试token'
+  param:
+    realname: '测试名字'

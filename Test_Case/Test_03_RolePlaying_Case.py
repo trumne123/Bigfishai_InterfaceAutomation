@@ -2,8 +2,6 @@ import json
 import time
 import pytest
 import requests
-
-import conftest
 from Command.DealJson import *
 from Command.DealAudioFile import *
 from Command.Support_function import *
@@ -12,9 +10,67 @@ from requests_toolbelt import MultipartEncoder
 
 @pytest.mark.usefixtures('pre_class_test')
 class Test_RolePlaying:
+    # 新用户登录
+    @pytest.mark.skip('pass')
+    def test01_new_login(self):
+        json_data = []
+        request_data = read_data(filepath_variable_path['testData'] + 'login.yaml')
+        request_url = request_data['url']
+        for user_phone in create_role_user():
+            request_data['param']['telephone'] = user_phone
+            request_param = request_data['param']
+            response = requests.post(url=request_url, json=request_param)
+            json_data.append(response.json())
+        get_token(json_data)
+        print('完成新用户登录')
+
+    # 班级码查询班级
+    @pytest.mark.parametrize('case_data', read_data(filepath_variable_path['RolePlayingCase'] + 'test02_klass.yaml'))
+    def test02_klass(self, case_data):
+        request_url = case_data['url']
+        access_token = list(query_data(f'select value from linked_data where title = "custom_token"')[0][0])
+        print(access_token)
+        print(type(access_token))
+        # for token in access_token:
+            # case_data['header']['Authorization'] = 'Token ' + token
+            # request_header = case_data['header']
+            # response = requests.get(url=request_url, headers=request_header)
+            # print('完成查询klass')
+            # print(response.json())
+            # print(token)
+
+    # 加入班级
+    @pytest.mark.skip('pass')
+    @pytest.mark.parametrize('case_data', read_data(filepath_variable_path['RolePlayingCase'] + 'test03_bind_klass.yaml'))
+    def test03_bind_klass(self, case_data):
+        request_url = case_data['url']
+        access_token = query_data(f'select value from linked_data where title = "custom_token"')[0][0]
+        for token in access_token:
+            case_data['header']['Authorization'] = 'Token ' + token
+            request_header = case_data['header']
+            case_data['param']['realname'] = create_realname()
+            request_param = case_data['param']
+            response = requests.get(url=request_url, params=request_param, headers=request_header)
+            print(response.request.url)
+            print(response.request.body)
+            print(response.json())
+
     # 创建小组
-    def test01_group(self):
-        conftest.custom_login('15702264620', '15702264621')
+    @pytest.mark.skip('pass')
+    @pytest.mark.parametrize('user_phone', create_role_user())
+    def test01_group(self, user_phone):
+        json_data = []
+        request_url = read_data(filepath_variable_path['DubbingShowCase'] + 'test01_competition.yaml')
+        request_param = {
+            'telephone': user_phone,
+            'verify_code': '209394',
+            'wechar_info2_id': '',
+            'apple_info_id': 0
+        }
+        response = requests.post(url=request_url, json=request_param)
+        json_data.append(response.json())
+        get_token(json_data)
+        print('完成登录，获取token')
 
     # 根据小组码获取小组信息
     def test02_get_by_code(self):

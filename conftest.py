@@ -35,23 +35,6 @@ def pre_class_test():
         os.remove(download_video_path + download_video_file)
 
 
-# 多账号登录获取多个token
-def custom_login(*telephone):
-    json_data = []
-    request_url = read_data(filepath_variable_path['testData'] + 'login.yaml')['url']
-    for phone in telephone:
-        request_param = {
-            'telephone': phone,
-            'verify_code': '209394',
-            'wechar_info2_id': '',
-            'apple_info_id': 0
-        }
-        response = requests.post(url=request_url, json=request_param)
-        json_data.append(response.json())
-    get_token(json_data)
-    print('完成登录，获取token')
-
-
 # 删除json缓存
 def delete_json_file():
     temp_path = './Test_Result/temp/'
