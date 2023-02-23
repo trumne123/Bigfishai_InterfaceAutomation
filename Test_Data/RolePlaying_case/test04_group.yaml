@@ -1,0 +1,7 @@
+-
+  url: 'https://www.bigfishai.com:8300/api/dubbing/group/'
+  header:
+    Authorization: '测试token'
+  param:
+    competition_id: '测试id'
+    is_alone: 'false'

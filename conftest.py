@@ -8,7 +8,7 @@ from Command.DefinedVariable import *
 
 
 # 项目开始前事件：删除缓存、获取登录token、获取用户信息,项目结束后自动退出登录，释放token
-@pytest.fixture(scope='session', autouse=True)
+@pytest.fixture(scope='session', autouse=False)
 def session_test():
     delete_json_file()
     login()

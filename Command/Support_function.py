@@ -26,10 +26,19 @@ def update_token(case_data):
     return case_data
 
 
-def update_competition_id(case_data):
-    compition_id = query_data(f'select value from linked_data where title = "competition_id_dubbing"')[0][0]
-    case_data['param']['competition_id'] = compition_id
-    return case_data
+def update_competition_id(case_data, key):
+    if key == 'reading':
+        compition_id = query_data(f'select value from linked_data where title = "competition_id_reading"')[0][0]
+        case_data['param']['competition_id'] = compition_id
+        return case_data
+    elif key == 'dubbing':
+        compition_id = query_data(f'select value from linked_data where title = "competition_id_dubbing"')[0][0]
+        case_data['param']['competition_id'] = compition_id
+        return case_data
+    elif key == 'role':
+        compition_id = query_data(f'select value from linked_data where title = "competition_id_role_playing"')[0][0]
+        case_data['param']['competition_id'] = compition_id
+        return case_data
 
 
 # 打包评测文本
@@ -192,5 +201,19 @@ def create_realname():
     return realname
 
 
-if __name__ == '__main__':
-    create_realname()
+def get_access_token(role_type):
+    if role_type == 0:
+        access_token = []
+        str_token = query_data(f'select value from linked_data where title = "custom_token"')[0][0]
+        access_token.append(str_token[2:42])
+        access_token.append(str_token[-42:-2])
+        return access_token
+    elif role_type == 1:
+        str_token = query_data(f'select value from linked_data where title = "custom_token"')[0][0]
+        return str_token[2:42]
+    elif role_type == 2:
+        str_token = query_data(f'select value from linked_data where title = "custom_token"')[0][0]
+        return str_token[-42:-2]
+    else:
+        return '只能传入0/1/2'
+

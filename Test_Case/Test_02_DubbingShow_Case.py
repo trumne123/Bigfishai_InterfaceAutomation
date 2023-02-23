@@ -24,7 +24,7 @@ class Test_DubbingShow:
     # 获取配音详情
     @pytest.mark.parametrize('CaseData', read_data(filepath_variable_path['DubbingShowCase'] + 'test02_dubbingsrcv.yaml'))
     def test02_dubbingsrcv(self, CaseData):
-        case_data = update_competition_id(update_url(update_token(CaseData), 'dubbing_src'))
+        case_data = update_competition_id(update_url(update_token(CaseData), 'dubbing_src'), 'dubbing')
         request_url = case_data['url']
         request_headers = case_data['header']
         param = case_data['param']

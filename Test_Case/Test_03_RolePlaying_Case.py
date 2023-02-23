@@ -8,7 +8,7 @@ from Command.Support_function import *
 from requests_toolbelt import MultipartEncoder
 
 
-@pytest.mark.usefixtures('pre_class_test')
+# @pytest.mark.usefixtures('pre_class_test')
 class Test_RolePlaying:
     # 新用户登录
     @pytest.mark.skip('pass')
@@ -28,49 +28,42 @@ class Test_RolePlaying:
     @pytest.mark.parametrize('case_data', read_data(filepath_variable_path['RolePlayingCase'] + 'test02_klass.yaml'))
     def test02_klass(self, case_data):
         request_url = case_data['url']
-        access_token = list(query_data(f'select value from linked_data where title = "custom_token"')[0][0])
-        print(access_token)
-        print(type(access_token))
-        # for token in access_token:
-            # case_data['header']['Authorization'] = 'Token ' + token
-            # request_header = case_data['header']
-            # response = requests.get(url=request_url, headers=request_header)
-            # print('完成查询klass')
-            # print(response.json())
-            # print(token)
+        for token in get_access_token(0):
+            case_data['header']['Authorization'] = 'Token ' + token
+            request_header = case_data['header']
+            response = requests.get(url=request_url, headers=request_header)
+            print(response.json())
+        print('完成查询klass')
 
     # 加入班级
-    @pytest.mark.skip('pass')
+    # @pytest.mark.skip('pass')
     @pytest.mark.parametrize('case_data', read_data(filepath_variable_path['RolePlayingCase'] + 'test03_bind_klass.yaml'))
     def test03_bind_klass(self, case_data):
         request_url = case_data['url']
-        access_token = query_data(f'select value from linked_data where title = "custom_token"')[0][0]
-        for token in access_token:
+        for token in get_access_token(0):
             case_data['header']['Authorization'] = 'Token ' + token
             request_header = case_data['header']
             case_data['param']['realname'] = create_realname()
             request_param = case_data['param']
             response = requests.get(url=request_url, params=request_param, headers=request_header)
-            print(response.request.url)
-            print(response.request.body)
             print(response.json())
+        print('完成加入班级')
 
     # 创建小组
-    @pytest.mark.skip('pass')
-    @pytest.mark.parametrize('user_phone', create_role_user())
-    def test01_group(self, user_phone):
-        json_data = []
-        request_url = read_data(filepath_variable_path['DubbingShowCase'] + 'test01_competition.yaml')
-        request_param = {
-            'telephone': user_phone,
-            'verify_code': '209394',
-            'wechar_info2_id': '',
-            'apple_info_id': 0
-        }
-        response = requests.post(url=request_url, json=request_param)
-        json_data.append(response.json())
-        get_token(json_data)
-        print('完成登录，获取token')
+    # @pytest.mark.skip('pass')
+    @pytest.mark.parametrize('case_data', read_data(filepath_variable_path['RolePlayingCase'] + 'test04_group.yaml'))
+    def test04_group(self, case_data):
+        CaseData = update_competition_id(case_data, 'role')
+        access_token = get_access_token(1)
+        request_url = CaseData['url']
+        request_param = CaseData['param']
+        CaseData['header']['Authorization'] = 'Token ' + access_token
+        request_header = CaseData['header']
+        print(request_url)
+        print(request_param)
+        print(request_header)
+        response = requests.post(url=request_url, headers=request_header, json=request_param)
+        print(response.json())
 
     # 根据小组码获取小组信息
     def test02_get_by_code(self):
