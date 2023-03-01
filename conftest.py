@@ -8,14 +8,14 @@ from Command.DefinedVariable import *
 
 
 # 项目开始前事件：删除缓存、获取登录token、获取用户信息,项目结束后自动退出登录，释放token
-@pytest.fixture(scope='session', autouse=False)
+@pytest.fixture(scope='session', autouse=True)
 def session_test():
     delete_json_file()
-    login()
-    get_user_info()
-    get_competition_list()
-    yield
-    login_out()
+    # login()
+    # get_user_info()
+    # get_competition_list()
+    # yield
+    # login_out()
 
 
 # 批量删除音频文件，测试class开始进行

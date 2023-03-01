@@ -1,0 +1,8 @@
+-
+  url: 'https://www.bigfishai.com:8300/api/dubbing/group/group_id/edit/'
+  header:
+    Authorization: '测试token'
+  param:
+    edit_type: 1
+    is_active: false
+    role_id: 0

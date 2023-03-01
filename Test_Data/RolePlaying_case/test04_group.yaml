@@ -4,4 +4,4 @@
     Authorization: '测试token'
   param:
     competition_id: '测试id'
-    is_alone: 'false'
+    is_alone: false

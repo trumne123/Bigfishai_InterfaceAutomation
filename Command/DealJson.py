@@ -122,3 +122,16 @@ def get_dubbingsrcv_info(json):
         end_time = i['end_timestamp']
         in_data = f'insert into dubbing_info_data(dialogue_id, start_time, end_time, title) value({dialogue_id}, "{start_time}", "{end_time}", "{title}")'
         insert_data(in_data)
+
+
+# 存入当前小组码
+def get_group_info(json):
+    try:
+        group_code = json['data']['code']
+        update_data(f'update linked_data set value = "{group_code}" where title = "group_code"')
+        print('存入group_code成功')
+        group_id = json['data']['id']
+        update_data(f'update linked_data set value = "{group_id}" where title = "group_id"')
+        print('存入group_id成功')
+    except Exception as e:
+        print('获取的json不合法！', e)

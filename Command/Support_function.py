@@ -6,38 +6,38 @@ from Command.DealSqlData import *
 # 更新url
 def update_url(case_data, key):
     if key == 'reading':
-        compition_id = query_data(f'select value from linked_data where title = "competition_id_reading"')[0][0]
+        compition_id = query_data('select value from linked_data where title = "competition_id_reading"')[0][0]
         case_data['url'] = case_data['url'].replace('competition_id', compition_id)
         return case_data
     elif key == 'dubbing':
-        compition_id = query_data(f'select value from linked_data where title = "competition_id_dubbing"')[0][0]
+        compition_id = query_data('select value from linked_data where title = "competition_id_dubbing"')[0][0]
         case_data['url'] = case_data['url'].replace('competition_id', compition_id)
         return case_data
     elif key == 'dubbing_src':
-        dubbing_src = query_data(f'select value from linked_data where title = "dubbing_src"')[0][0]
+        dubbing_src = query_data('select value from linked_data where title = "dubbing_src"')[0][0]
         case_data['url'] = case_data['url'].replace('dubbing_src', dubbing_src)
         return case_data
 
 
 # 更新token
 def update_token(case_data):
-    new_token = query_data(f'select value from linked_data where title = "token"')[0][0]
+    new_token = query_data('select value from linked_data where title = "token"')[0][0]
     case_data['header']['Authorization'] = new_token
     return case_data
 
 
 def update_competition_id(case_data, key):
     if key == 'reading':
-        compition_id = query_data(f'select value from linked_data where title = "competition_id_reading"')[0][0]
+        compition_id = query_data('select value from linked_data where title = "competition_id_reading"')[0][0]
         case_data['param']['competition_id'] = compition_id
         return case_data
     elif key == 'dubbing':
-        compition_id = query_data(f'select value from linked_data where title = "competition_id_dubbing"')[0][0]
+        compition_id = query_data('select value from linked_data where title = "competition_id_dubbing"')[0][0]
         case_data['param']['competition_id'] = compition_id
         return case_data
     elif key == 'role':
-        compition_id = query_data(f'select value from linked_data where title = "competition_id_role_playing"')[0][0]
-        case_data['param']['competition_id'] = compition_id
+        compition_id = query_data('select value from linked_data where title = "competition_id_role_playing"')[0][0]
+        case_data['param']['competition_id'] = int(compition_id)
         return case_data
 
 
@@ -204,16 +204,25 @@ def create_realname():
 def get_access_token(role_type):
     if role_type == 0:
         access_token = []
-        str_token = query_data(f'select value from linked_data where title = "custom_token"')[0][0]
+        str_token = query_data('select value from linked_data where title = "custom_token"')[0][0]
         access_token.append(str_token[2:42])
         access_token.append(str_token[-42:-2])
         return access_token
     elif role_type == 1:
-        str_token = query_data(f'select value from linked_data where title = "custom_token"')[0][0]
+        str_token = query_data('select value from linked_data where title = "custom_token"')[0][0]
         return str_token[2:42]
     elif role_type == 2:
-        str_token = query_data(f'select value from linked_data where title = "custom_token"')[0][0]
+        str_token = query_data('select value from linked_data where title = "custom_token"')[0][0]
         return str_token[-42:-2]
     else:
         return '只能传入0/1/2'
 
+
+def update_group_code(case_data):
+    group_code = query_data('select value from linked_data where title = "group_code"')[0][0]
+    case_data['param']['code'] = group_code
+    return case_data
+
+
+def update_group_id(case_data):
+    pass

@@ -28,10 +28,12 @@ class Test_ReadingShow:
         request_header = case_data['header']
         request_param = case_data['param']
         response = requests.post(url=request_url, headers=request_header, json=request_param)
+        print(response.request.body)
         print(response.json())
         get_dubbing_info(response.json())
 
     # 下载音频
+    # @pytest.mark.skip('pass')
     def test03_download_audio(self):
         case_data = read_data(filepath_variable_path['ReadingShowCase'] + 'test03_download_audio.yaml')
         for case_info in case_data:
@@ -47,6 +49,7 @@ class Test_ReadingShow:
             print(f'{case_data.index(case_info)}完成下载')
 
     # 上传音频评测
+    # @pytest.mark.skip('pass')
     def test04_speech_evaluation_report(self):
         case_data = read_data(filepath_variable_path['ReadingShowCase'] + 'test04_speech_evaluation_report.yaml')
         for case_info in case_data:
@@ -81,6 +84,7 @@ class Test_ReadingShow:
 
     # 提交作答记录
     @pytest.mark.parametrize('CaseData', read_data(filepath_variable_path['ReadingShowCase'] + 'test05_commit.yaml'))
+    # @pytest.mark.skip('pass')
     def test05_commit(self, CaseData):
         case_data = update_url(update_token(CaseData), 'reading')
         request_url = case_data['url']
@@ -90,6 +94,7 @@ class Test_ReadingShow:
 
     # 获取用户作答记录
     @pytest.mark.parametrize('CaseData', read_data(filepath_variable_path['ReadingShowCase'] + 'test06_get_user_record.yaml'))
+    # @pytest.mark.skip('pass')
     def test06_get_user_record(self, CaseData):
         case_data = update_url(update_token(CaseData), 'reading')
         request_url = case_data['url']
@@ -99,6 +104,7 @@ class Test_ReadingShow:
 
     # 获取排行榜详情
     @pytest.mark.parametrize('CaseData', read_data(filepath_variable_path['ReadingShowCase'] + 'test07_get_ranking_detail.yaml'))
+    # @pytest.mark.skip('pass')
     def test07_get_ranking_detail(self, CaseData):
         case_data = update_url(update_token(CaseData), 'reading')
         request_url = case_data['url']
