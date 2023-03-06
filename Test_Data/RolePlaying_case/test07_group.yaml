@@ -1,0 +1,4 @@
+-
+  url: 'https://www.bigfishai.com:8300/api/dubbing/group/group_id/'
+  header:
+    Authorization: '测试token'

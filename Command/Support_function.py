@@ -225,4 +225,6 @@ def update_group_code(case_data):
 
 
 def update_group_id(case_data):
-    pass
+    group_id = query_data('select value from linked_data where title = "group_id"')[0][0]
+    case_data['url'] = case_data['url'].replace('group_id', group_id)
+    return case_data

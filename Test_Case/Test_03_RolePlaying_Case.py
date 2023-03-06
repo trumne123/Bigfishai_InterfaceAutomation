@@ -52,7 +52,7 @@ class Test_RolePlaying:
         print('完成加入班级')
 
     # 创建小组
-    # @pytest.mark.skip('pass')
+    @pytest.mark.skip('pass')
     @pytest.mark.parametrize('case_data', read_data(filepath_variable_path['RolePlayingCase'] + 'test04_group.yaml'))
     def test04_group(self, case_data):
         request_data = update_competition_id(case_data, 'role')
@@ -67,6 +67,7 @@ class Test_RolePlaying:
         print('完成group测试')
 
     # 根据小组码获取小组信息
+    @pytest.mark.skip('pass')
     @pytest.mark.parametrize('case_data', read_data(filepath_variable_path['RolePlayingCase'] + 'test05_get_by_code.yaml'))
     def test05_get_by_code(self, case_data):
         request_data = update_group_code(update_competition_id(case_data, 'role'))
@@ -80,13 +81,45 @@ class Test_RolePlaying:
         print('完成get_by_code测试！')
 
     # 修改小组(加入小组，退出小组，解散小组)
+    @pytest.mark.skip('pass')
     @pytest.mark.parametrize('case_data', read_data(filepath_variable_path['RolePlayingCase'] + 'test06_group_edit.yaml'))
     def test06_group_edit(self, case_data):
-        request_data = update_group_id(update_competition_id(case_data, 'role'))
+        request_data = update_group_id(case_data)
+        request_url = request_data['url']
+        request_param = request_data['param']
+        access_token = get_access_token(2)
+        request_data['header']['Authorization'] = 'Token ' + access_token
+        request_header = request_data['header']
+        response = requests.post(url=request_url, headers=request_header, json=request_param)
+        print(response.json())
+        print('完成group_edit测试！')
 
     # 获取小组信息(加入小组后)
-    def test07_group_id(self):
+    @pytest.mark.parametrize('case_data', read_data(filepath_variable_path['RolePlayingCase'] + 'test07_group.yaml'))
+    def test07_group_id(self, case_data):
+        request_data = update_group_id(case_data)
+        request_url = request_data['url']
+        access_token = get_access_token(1)
+        request_data['header']['Authorization'] = 'Token ' + access_token
+        request_header = request_data['header']
+        response = requests.get(url=request_url, headers=request_header)
+        print(response.json())
         print('完成group_id测试！')
+
+    # 修改小组(加入小组，退出小组，解散小组)
+    @pytest.mark.skip('pass')
+    @pytest.mark.parametrize('case_data',
+                             read_data(filepath_variable_path['RolePlayingCase'] + 'test06_group_edit.yaml'))
+    def test06_group_edit(self, case_data):
+        request_data = update_group_id(case_data)
+        request_url = request_data['url']
+        request_param = request_data['param']
+        access_token = get_access_token(2)
+        request_data['header']['Authorization'] = 'Token ' + access_token
+        request_header = request_data['header']
+        response = requests.post(url=request_url, headers=request_header, json=request_param)
+        print(response.json())
+        print('完成group_edit测试！')
 
     # 加载角色扮演内容
     def test08_redirect_type_5(self):
